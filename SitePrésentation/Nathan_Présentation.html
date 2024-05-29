@@ -1,1 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Site Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"> <!-- Ajout du lien vers la feuille de style AOS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333; /* Fond sombre */
+            color: #ddd; /* Texte clair */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .hero {
+            position: relative;
+            height: 100vh;
+            background: url('elements/background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin: 0;
+            animation: fadeInDown 1.5s ease-in-out;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin: 0px 0 0;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+        .content, .gallery, .contact {
+            padding: 50px 20px;
+            min-height: 400px; /* Ajout d'une hauteur minimale pour uniformiser les sections */
+        }
+        /* Styles pour les titres des sections */
+        .content h2, .gallery h2, .contact h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            margin-top: -10px; /* Réduire la marge supérieure */
+        }
 
+        .content p, .gallery p, .contact p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px; /* Ajout de la marge entre les boutons */
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-5px);
+        }
+        .gallery img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px;
+            border-radius: 15px;
+        }
+        .footer {
+            background-color: #222; /* Fond sombre */
+            color: #888; /* Texte gris clair */
+            padding: 20px 0;
+            text-align: center;
+        }
+        .footer p {
+            margin: 0;
+        }
+        .heart {
+            color: #e25555;
+            font-size: 2rem;
+            margin: 0 5px;
+        }
+        .heart-small {
+            color: #e25555;
+            font-size: 1.5rem;
+            margin: 0 3px;
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Media Queries pour les petits écrans (smartphones) */
+        @media only screen and (max-width: 767px) {
+            /* Réduire la taille de la police des titres des dossiers */
+            .folder p {
+                font-size: 0.8rem; /* Ajustez la taille de la police selon vos besoins */
+            }
+        
+            /* Réduire la taille des images à l'intérieur des dossiers */
+            .folder img {
+                width: 70px; /* Ajustez la largeur de l'image pour les smartphones */
+                height: 70px; /* Ajustez la hauteur de l'image pour les smartphones */
+            }
+        }
+        
+        /* Media Queries pour les tablettes */
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+            /* Ajoutez d'autres styles spécifiques aux tablettes ici */
+        }
+        
+        /* Media Queries pour les écrans de taille moyenne (ordinateurs portables) */
+        @media only screen and (min-width: 992px) and (max-width: 1199px) {
+            /* Ajoutez d'autres styles spécifiques aux écrans de taille moyenne ici */
+        }
+
+        /* Teintes de blanc pour les différentes sections */
+        .content {
+            background-color: #444; /* Gris foncé */
+        }
+        .gallery {
+            background-color: #555; /* Gris légèrement plus clair */
+        }
+       
+    .contact {
+            background-color: #666; /* Gris moyen */
+        }
+
+        /* Styles pour les dossiers */
+        .folders {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .folder {
+            cursor: pointer;
+            flex: 1;
+        }
+        .folder img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        /* Styles pour les albums */
+        .album {
+            display: none; /* Masquer initialement tous les albums */
+        }
+
+        /* Modales pour les albums */
+        .modal {
+            display: none; /* Masquer initialement la modale */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8); /* Fond sombre semi-transparent */
+        }
+
+        .modal-content {
+            margin: 10% auto;
+            background-color: #333; /* Fond sombre */
+            padding: 20px;
+            border: 1px solid #666;
+            width: 80%;
+            color: #ddd; /* Texte clair */
+        }
+
+        .close {
+            color:
+#aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff; /* Texte blanc */
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Styles pour ajuster la taille des images à l'intérieur des dossiers */
+        .folder-image {
+            width: 120px; /* Ajustez la taille selon vos préférences */
+            height: 120px; /* Ajustez la taille selon vos préférences */
+            object-fit: cover; /* Redimensionner l'image tout en conservant ses proportions */
+            border-radius: 5px; /* Pour rendre l'image légèrement arrondie si nécessaire */
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <h1 data-aos="fade-down">Bienvenue sur mon site web !</h1>
+            <p data-aos="fade-up">Ici vous apprendrez à mieux me connaître</p>
+        </div>
+    </div>
+    <div class="content" data-aos="fade-up" data-aos-duration="1000">
+        <div class="container">
+            <h2>À propos de moi 🤔</h2>
+            <p>Je m'appelle Gabriel Casarotto, je suis actuellement en troisième année dans une école d'ingénieurs aéronautique et spatial, dans la filière "signaux et systèmes aérospatiaux". Dès la rentrée prochaine, j'aurai l'honneur de me concentrer pleinement sur la filière spatiale de l'école : "Espace, Lanceurs et Satellites".<br><br>
+                Actuellement, je suis à la recherche d'un emploi pour la période de mi-juin à mi-août, afin de préparer mon semestre d'études à l'étranger.<br><br>
+                En dehors des cours, j'aime faire du sport et créer de nouvelles choses, notamment avce l'IoT (vous pourrez trouver mes créations un peu plus tard).</p>
+        </div>
+    </div>
+
+    <!-- Section pour les dossiers (langage de programmation, langues, Logiciels) -->
+    <div class="gallery" data-aos="fade-up" data-aos-duration="1000">
+        <div class="container">
+            <h2>Mes compétences ⚙️</h2>
+            <div class="folders">
+                <!-- Dossier Langage de Programmation -->
+                <div class="folder" onclick="openModal('langage')">
+                    <img class="folder-image" src="https://cdn.icon-icons.com/icons2/2217/PNG/512/augmented_reality_computer_developer_coding_programming_icon_134250.png" alt="Langage de Programmation">
+                    <p>Langage de Programmation</p>
+                </div>
+
+                <!-- Dossier Langues -->
+                <div class="folder" onclick="openModal('langues')">
+                    <img class="folder-image" src="https://cdn-icons-png.flaticon.com/512/8495/8495091.png" alt="Langues">
+                    <p>Langues</p>
+                </div>
+
+                <!-- Dossier Logiciels -->
+                <div class="folder" onclick="openModal('logiciels')">
+                    <img class="folder-image" src="https://static.vecteezy.com/ti/vecteur-libre/p3/18779704-illustrationle-d-icone-de-couleur-de-logiciel-d-application-vectoriel.jpg" alt="Logiciels">
+                    <p>Logiciels</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales pour les albums -->
+    <div id="langageModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('langage')">&times;</span>
+            <!-- Contenu de l'album langage -->
+            <h3>Langage de Programmation</h3>
+            <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/c_original_logo_icon_146611.png" alt="Image 1" class="folder-image">
+            
+            <img src="https://cdn-icons-png.flaticon.com/512/6132/6132222.png" alt="Image 2" class="folder-image">
+            
+            <img src="https://cdn.icon-icons.com/icons2/112/PNG/512/python_18894.png" alt="Image 2" class="folder-image">
+            
+            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/arduino_logo_icon_170518.png" alt="Image 2" class="folder-image">
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Matlab_Logo.png/800px-Matlab_Logo.png" alt="Image 2" class="folder-image">
+            
+             <img src="https://cdn-icons-png.flaticon.com/512/888/888859.png" alt="Image 2" class="folder-image">
+            
+            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968242.png" alt="Image 2" class="folder-image">
+            
+        </div>
+    </div>
+
+    <div id="languesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('langues')">&times;</span>
+            <!-- Contenu de l'album langues -->
+            <h3>Langues</h3>
+            <img src="https://cdn-icons-png.flaticon.com/512/197/197560.png" alt="français" class="folder-image">
+            
+            <img src="https://cdn-icons-png.flaticon.com/512/197/197374.png" alt="Anglais" class="folder-image">
+            
+            <img src="https://cdn-icons-png.flaticon.com/512/197/197386.png" alt="Portugais" class="folder-image">
+            
+            <img src="https://cdn.icon-icons.com/icons2/1531/PNG/512/3253482-flag-spain-icon_106784.png" alt="Espagnol" class="folder-image">
+            
+        </div>
+    </div>
+
+    <div id="logicielsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('logiciels')">&times;</span>
+            <!-- Contenu de l'album logiciels -->
+            <h3>Logiciels</h3>
+            <img src="https://play-lh.googleusercontent.com/U9xypdqrbAAa2SR1oKqsXn8UpBZzftY9N2ZAfzpgFRDMme9JCVJIZU9RvRZIOOGbWvtc" alt="Catia" class="folder-image">
+            
+            <img src="https://cdn.icon-icons.com/icons2/3053/PNG/512/autodesk_fusion_macos_bigsur_icon_190367.png" alt="fusion 360" class="folder-image">
+            
+            <img src="https://cdn.icon-icons.com/icons2/3053/PNG/512/ultimaker_cura_macos_bigsur_icon_189596.png" alt="cura" class="folder-image">
+            
+            <img src="https://easyeda.com/images/easyeda-thumbnail.png?id=d5ed1fe5930602975df1" alt="easyEDA" class="folder-image">
+            
+            <img src="https://cdn.icon-icons.com/icons2/1381/PNG/512/msword_94106.png" alt="word" class="folder-image">
+            
+            <img src="https://images.freeimages.com/fic/images/icons/2795/office_2013_hd/2000/powerpoint.png" alt="powerpoint" class="folder-image">
+            
+            <img src="https://cdn.icon-icons.com/icons2/1381/PNG/512/msexcel_93695.png" alt="excel" class="folder-image">
+            
+            <img src="https://www.tiilt.io/wp-content/uploads/2023/07/Design-sans-titre-3.png" alt="Image 3" class="folder-image">
+            
+        </div>
+    </div>
+    
+    <!-- Section Contact -->
+<div class="contact" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+        <h2>📱Contact ✉️</h2>
+        <p>Pour toute question ou demande d'information, vous pouvez me contacter de différentes manières :</p>
+        <!-- Bouton LinkedIn -->
+        <a href="https://www.linkedin.com/in/gabriel-casarotto/" target="_blank" class="button">LinkedIn</a>
+        <!-- Bouton E-mail -->
+        <a href="mailto:gabriel.casarotto-moreira@ipsa.fr" class="button">E-mail</a>
+        <!-- Bouton Téléphone -->
+        <a href="tel:+33777755193" class="button">Téléphone</a>
+
+        <p>Plus d'informations ici :</p>
+
+        <!-- Bouton CV -->
+        <a href="elements/CV FR 2024.pdf" target="_blank" class="button">Cliquez ici pour voir mon CV</a>
+        <!-- Bouton TIKTOK -->
+        <a href="https://www.tiktok.com/@gabspacesystem" target="_blank" class="button">Cliquez ici pour voir mes créations</a>
+    </div>
+</div>
+
+    <!--Footer -->
+    <div class="footer" data-aos="fade-up" data-aos-duration="1000">
+        <div class="container">
+            <p>© 2024 Site de Gabriel Casarotto. Tous droits réservés.</p>
+        </div>
+    </div>
+
+    <!-- Script pour afficher/masquer les modales -->
+    <script>
+        function openModal(albumName) {
+            var modal = document.getElementById(albumName + 'Modal');
+            modal.style.display = "block";
+        }
+
+        function closeModal(albumName) {
+            var modal = document.getElementById(albumName + 'Modal');
+            modal.style.display = "none";
+        }
+
+        // Fermer la modale lorsque l'utilisateur clique en dehors de celle-ci
+        window.onclick = function(event) {
+            var modals = document.getElementsByClassName('modal');
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    <!-- Script pour l'initialisation de AOS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>
